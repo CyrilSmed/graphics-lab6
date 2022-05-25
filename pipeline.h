@@ -1,25 +1,8 @@
-/*
-	Copyright 2010 Etay Meiri
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #ifndef PIPELINE_H
 #define	PIPELINE_H
 
-#include "ogldev_math_3d.h"
-#include "ogldev_camera.h"
+#include "math_3d.h"
+#include "camera.h"
 
 struct Orientation
 {
@@ -92,11 +75,6 @@ public:
     {
         m_persProjInfo = p;
     }
-    
-    void SetOrthographicProj(const OrthoProjInfo& p)
-    {
-        m_orthoProjInfo = p;
-    }    
 
     void SetCamera(const Vector3f& Pos, const Vector3f& Target, const Vector3f& Up)
     {
@@ -117,14 +95,10 @@ public:
         m_rotateInfo = o.m_rotation;
     }
 
-    const Matrix4f& GetWPTrans();
-    const Matrix4f& GetWVTrans();
+	const Matrix4f& GetWVTrans();
     const Matrix4f& GetVPTrans();
     const Matrix4f& GetWVPTrans();
-    const Matrix4f& GetWVOrthoPTrans();
     const Matrix4f& GetWorldTrans();
-    const Matrix4f& GetViewTrans();
-    const Matrix4f& GetProjTrans();
 
 private:
     Vector3f m_scale;
@@ -132,7 +106,6 @@ private:
     Vector3f m_rotateInfo;
 
     PersProjInfo m_persProjInfo;
-    OrthoProjInfo m_orthoProjInfo;
 
     struct {
         Vector3f Pos;
@@ -141,12 +114,9 @@ private:
     } m_camera;
 
     Matrix4f m_WVPtransformation;
-    Matrix4f m_VPtransformation;
-    Matrix4f m_WPtransformation;
-    Matrix4f m_WVtransformation;
-    Matrix4f m_Wtransformation;
-    Matrix4f m_Vtransformation;
-    Matrix4f m_ProjTransformation;
+    Matrix4f m_VPTtransformation;
+	Matrix4f m_WVtransformation;
+    Matrix4f m_WorldTransformation;
 };
 
 

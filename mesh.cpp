@@ -1,7 +1,6 @@
 #include <assert.h>
 
-#include "ogldev_basic_mesh.h"
-#include "ogldev_engine_common.h"
+#include "mesh.h"
 
 using namespace std;
 
@@ -9,20 +8,20 @@ using namespace std;
 #define TEX_COORD_LOCATION 1
 #define NORMAL_LOCATION 2
 
-BasicMesh::BasicMesh()
+Mesh::Mesh()
 {
     m_VAO = 0;
     ZERO_MEM(m_Buffers);
 }
 
 
-BasicMesh::~BasicMesh()
+Mesh::~Mesh()
 {
     Clear();
 }
 
 
-void BasicMesh::Clear()
+void Mesh::Clear()
 {
     for (unsigned int i = 0 ; i < m_Textures.size() ; i++) {
         SAFE_DELETE(m_Textures[i]);
@@ -39,7 +38,7 @@ void BasicMesh::Clear()
 }
 
 
-bool BasicMesh::LoadMesh(const string& Filename)
+bool Mesh::LoadMesh(const string& Filename)
 {
     // Release the previously loaded mesh (if it exists)
     Clear();
@@ -54,7 +53,7 @@ bool BasicMesh::LoadMesh(const string& Filename)
     bool Ret = false;
     Assimp::Importer Importer;
 
-    const aiScene* pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_FindDegenerates);
+    const aiScene* pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
     
     if (pScene) {
         Ret = InitFromScene(pScene, Filename);
@@ -69,7 +68,7 @@ bool BasicMesh::LoadMesh(const string& Filename)
     return Ret;
 }
 
-bool BasicMesh::InitFromScene(const aiScene* pScene, const string& Filename)
+bool Mesh::InitFromScene(const aiScene* pScene, const string& Filename)
 {  
     m_Entries.resize(pScene->mNumMeshes);
     m_Textures.resize(pScene->mNumMaterials);
@@ -131,7 +130,7 @@ bool BasicMesh::InitFromScene(const aiScene* pScene, const string& Filename)
     return GLCheckError();
 }
 
-void BasicMesh::InitMesh(const aiMesh* paiMesh,
+void Mesh::InitMesh(const aiMesh* paiMesh,
                     vector<Vector3f>& Positions,
                     vector<Vector3f>& Normals,
                     vector<Vector2f>& TexCoords,
@@ -160,7 +159,7 @@ void BasicMesh::InitMesh(const aiMesh* paiMesh,
     }
 }
 
-bool BasicMesh::InitMaterials(const aiScene* pScene, const string& Filename)
+bool Mesh::InitMaterials(const aiScene* pScene, const string& Filename)
 {
     // Extract the directory part from the file name
     string::size_type SlashIndex = Filename.find_last_of("/");
@@ -215,7 +214,7 @@ bool BasicMesh::InitMaterials(const aiScene* pScene, const string& Filename)
 }
 
 
-void BasicMesh::Render()
+void Mesh::Render()
 {
     glBindVertexArray(m_VAO);
     
@@ -225,7 +224,7 @@ void BasicMesh::Render()
         assert(MaterialIndex < m_Textures.size());
         
         if (m_Textures[MaterialIndex]) {
-            m_Textures[MaterialIndex]->Bind(COLOR_TEXTURE_UNIT);
+            m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
         }
 
         glDrawElementsBaseVertex(GL_TRIANGLES, 
@@ -239,7 +238,7 @@ void BasicMesh::Render()
     glBindVertexArray(0);
 }
 
-void BasicMesh::Render(unsigned int NumInstances, const Matrix4f* WVPMats, const Matrix4f* WorldMats)
+void Mesh::Render(unsigned int NumInstances, const Matrix4f* WVPMats, const Matrix4f* WorldMats)
 {        
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WVP_MAT_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4f) * NumInstances, WVPMats, GL_DYNAMIC_DRAW);
