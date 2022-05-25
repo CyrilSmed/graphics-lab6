@@ -13,35 +13,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-#ifndef INTERMEDIATE_BUFFER_H
-#define	INTERMEDIATE_BUFFER_H
+#ifndef SHADOW_MAP_TECHNIQUE_H
+#define	SHADOW_MAP_TECHNIQUE_H
 
-#include <GL/glew.h>
+#include "technique.h"
+#include "ogldev_math_3d.h"
 
+class ShadowMapTechnique : public Technique {
 
-class IntermediateBuffer
-{
 public:
 
-    IntermediateBuffer();
+    ShadowMapTechnique();
 
-    ~IntermediateBuffer();
+    virtual bool Init();
 
-    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
-
-    void BindForWriting();
-
-    void BindForReading();  
-
+    void SetWVP(const Matrix4f& WVP);
+    void SetTextureUnit(unsigned int TextureUnit);
 private:
 
-    GLuint m_fbo;
-    GLuint m_colorBuffer;
-    GLuint m_motionBuffer;
-	GLuint m_depthBuffer;
+    GLuint m_WVPLocation;
+    GLuint m_textureLocation;
 };
 
-#endif	
+
+#endif	/* SHADOW_MAP_TECHNIQUE_H */
 

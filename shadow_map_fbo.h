@@ -1,6 +1,5 @@
 /*
-
-	Copyright 2011 Etay Meiri
+        Copyright 2011 Etay Meiri
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,24 +15,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GLUT_BACKEND_H
-#define	GLUT_BACKEND_H
+#ifndef SHADOWMAPFBO_H
+#define	SHADOWMAPFBO_H
 
-#include "ogldev_types.h"
-#include "ogldev_callbacks.h"
+#include <GL/glew.h>
 
-void GLUTBackendInit(int argc, char** argv, bool WithDepth, bool WithStencil);
+class ShadowMapFBO
+{
+public:
+    ShadowMapFBO();
 
+    ~ShadowMapFBO();
 
-bool GLUTBackendCreateWindow(uint Width, uint Height, bool isFullScreen, const char* pTitle);
+    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
 
-void GLUTBackendRun(ICallbacks* pCallbacks);
+    void BindForWriting();
 
-void GLUTBackendSwapBuffers();
+    void BindForReading(GLenum TextureUnit);
 
-void GLUTBackendLeaveMainLoop();
+private:
+    GLuint m_fbo;
+    GLuint m_shadowMap;
+};
 
-OGLDEV_KEY GLUTKeyToOGLDEVKey(uint Key);
-
-#endif	/* GLUT_BACKEND_H */
+#endif	/* SHADOWMAPFBO_H */
 

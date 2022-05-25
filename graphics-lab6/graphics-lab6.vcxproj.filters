@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\intermediate_buffer.h">
+    <ClInclude Include="..\AntTweakBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\motion_blur_technique.h">
+    <ClInclude Include="..\lighting_technique.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ogldev_app.h">
@@ -28,6 +28,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ogldev_backend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ogldev_basic_mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ogldev_callbacks.h">
@@ -57,9 +60,6 @@
     <ClInclude Include="..\ogldev_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ogldev_skinned_mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ogldev_texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,13 +69,13 @@
     <ClInclude Include="..\ogldev_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\skinning_technique.h">
+    <ClInclude Include="..\shadow_map_fbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shadow_map_technique.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\technique.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AntTweakBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,13 +86,10 @@
     <ClCompile Include="..\glut_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\intermediate_buffer.cpp">
+    <ClCompile Include="..\lighting_technique.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\math_3d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\motion_blur_technique.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ogldev_app.cpp">
@@ -104,10 +101,10 @@
     <ClCompile Include="..\ogldev_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ogldev_glfw_backend.cpp">
+    <ClCompile Include="..\ogldev_basic_mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ogldev_skinned_mesh.cpp">
+    <ClCompile Include="..\ogldev_glfw_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ogldev_texture.cpp">
@@ -119,13 +116,16 @@
     <ClCompile Include="..\pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\skinning_technique.cpp">
+    <ClCompile Include="..\shadow_map_fbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shadow_map_technique.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\technique.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\tutorial41.cpp">
+    <ClCompile Include="..\tutorial42.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

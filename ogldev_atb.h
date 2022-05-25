@@ -6,7 +6,6 @@
 
 #include "AntTweakBar.h"
 
-
 class ATB
 {
 public:
