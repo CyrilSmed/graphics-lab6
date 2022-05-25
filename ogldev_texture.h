@@ -16,41 +16,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TECHNIQUE_H
-#define	TECHNIQUE_H
+#ifndef TEXTURE_H
+#define	TEXTURE_H
 
-#include <list>
+#include <string>
+
 #include <GL/glew.h>
+#include <Magick++.h>
 
-class Technique
+class Texture
 {
 public:
+    Texture(GLenum TextureTarget, const std::string& FileName);
 
-    Technique();
+    bool Load();
 
-    virtual ~Technique();
+    void Bind(GLenum TextureUnit);
 
-    virtual bool Init();
-
-    void Enable();
-
-protected:
-
-    bool AddShader(GLenum ShaderType, const char* pFilename);
-
-    bool Finalize();
-
-    GLint GetUniformLocation(const char* pUniformName);
-    
-    GLint GetProgramParam(GLint param);
-    
-    GLuint m_shaderProg;    
-    
 private:
-
-    typedef std::list<GLuint> ShaderObjList;
-    ShaderObjList m_shaderObjList;
+    std::string m_fileName;
+    GLenum m_textureTarget;
+    GLuint m_textureObj;
+    Magick::Image m_image;
+    Magick::Blob m_blob;
 };
 
-#endif	/* TECHNIQUE_H */
+
+#endif	/* TEXTURE_H */
 

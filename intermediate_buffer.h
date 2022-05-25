@@ -1,6 +1,5 @@
 /*
-
-	Copyright 2011 Etay Meiri
+        Copyright 2011 Etay Meiri
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,41 +15,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TECHNIQUE_H
-#define	TECHNIQUE_H
+#ifndef INTERMEDIATE_BUFFER_H
+#define	INTERMEDIATE_BUFFER_H
 
-#include <list>
 #include <GL/glew.h>
 
-class Technique
+
+class IntermediateBuffer
 {
 public:
 
-    Technique();
+    IntermediateBuffer();
 
-    virtual ~Technique();
+    ~IntermediateBuffer();
 
-    virtual bool Init();
+    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
 
-    void Enable();
+    void BindForWriting();
 
-protected:
+    void BindForReading();  
 
-    bool AddShader(GLenum ShaderType, const char* pFilename);
-
-    bool Finalize();
-
-    GLint GetUniformLocation(const char* pUniformName);
-    
-    GLint GetProgramParam(GLint param);
-    
-    GLuint m_shaderProg;    
-    
 private:
 
-    typedef std::list<GLuint> ShaderObjList;
-    ShaderObjList m_shaderObjList;
+    GLuint m_fbo;
+    GLuint m_colorBuffer;
+    GLuint m_motionBuffer;
+	GLuint m_depthBuffer;
 };
 
-#endif	/* TECHNIQUE_H */
+#endif	
 

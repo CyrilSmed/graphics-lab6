@@ -1,8 +1,24 @@
-#include <GL/freeglut.h>
+/*
 
-#include "camera.h"
+	Copyright 2010 Etay Meiri
 
-const static float STEP_SCALE = 0.1f;
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "ogldev_camera.h"
+
+const static float STEP_SCALE = 1.0f;
 const static float EDGE_STEP = 0.5f;
 const static int MARGIN = 10;
 
@@ -72,31 +88,31 @@ void Camera::Init()
     m_mousePos.x  = m_windowWidth / 2;
     m_mousePos.y  = m_windowHeight / 2;
 
-    glutWarpPointer(m_mousePos.x, m_mousePos.y);
+   // glutWarpPointer(m_mousePos.x, m_mousePos.y);
 }
 
 
-bool Camera::OnKeyboard(int Key)
+bool Camera::OnKeyboard(OGLDEV_KEY Key)
 {
     bool Ret = false;
 
     switch (Key) {
 
-    case GLUT_KEY_UP:
+    case OGLDEV_KEY_UP:
         {
             m_pos += (m_target * STEP_SCALE);
             Ret = true;
         }
         break;
 
-    case GLUT_KEY_DOWN:
+    case OGLDEV_KEY_DOWN:
         {
             m_pos -= (m_target * STEP_SCALE);
             Ret = true;
         }
         break;
 
-    case GLUT_KEY_LEFT:
+    case OGLDEV_KEY_LEFT:
         {
             Vector3f Left = m_target.Cross(m_up);
             Left.Normalize();
@@ -106,7 +122,7 @@ bool Camera::OnKeyboard(int Key)
         }
         break;
 
-    case GLUT_KEY_RIGHT:
+    case OGLDEV_KEY_RIGHT:
         {
             Vector3f Right = m_up.Cross(m_target);
             Right.Normalize();
@@ -116,13 +132,16 @@ bool Camera::OnKeyboard(int Key)
         }
         break;
         
-    case GLUT_KEY_PAGE_UP:
-        m_pos.y    += STEP_SCALE;
+    case OGLDEV_KEY_PAGE_UP:
+        m_pos.y += STEP_SCALE;
         break;
-        
-    case GLUT_KEY_PAGE_DOWN:
-        m_pos.y    -= STEP_SCALE;
-        break;        
+    
+    case OGLDEV_KEY_PAGE_DOWN:
+        m_pos.y -= STEP_SCALE;
+        break;
+    
+    default:
+        break;            
     }
 
     return Ret;
@@ -142,9 +161,11 @@ void Camera::OnMouse(int x, int y)
 
     if (DeltaX == 0) {
         if (x <= MARGIN) {
+        //    m_AngleH -= 1.0f;
             m_OnLeftEdge = true;
         }
         else if (x >= (m_windowWidth - MARGIN)) {
+        //    m_AngleH += 1.0f;
             m_OnRightEdge = true;
         }
     }
@@ -220,4 +241,12 @@ void Camera::Update()
 
     m_up = m_target.Cross(Haxis);
     m_up.Normalize();
+}
+
+
+void Camera::AddToATB(TwBar* bar)
+{
+    TwAddButton(bar, "Camera", NULL, NULL, "");                
+    TwAddVarRW(bar, "Position", TW_TYPE_OGLDEV_VECTOR3F, (void*)&m_pos, NULL);
+    TwAddVarRO(bar, "Direction", TW_TYPE_DIR3F, &m_target, " axisz=-z ");
 }
