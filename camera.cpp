@@ -3,6 +3,7 @@
 #include "camera.h"
 
 const static float STEP_SCALE = 0.1f;
+const static float EDGE_STEP = 0.5f;
 const static int MARGIN = 10;
 
 Camera::Camera(int WindowWidth, int WindowHeight)
@@ -141,11 +142,9 @@ void Camera::OnMouse(int x, int y)
 
     if (DeltaX == 0) {
         if (x <= MARGIN) {
-        //    m_AngleH -= 1.0f;
             m_OnLeftEdge = true;
         }
         else if (x >= (m_windowWidth - MARGIN)) {
-        //    m_AngleH += 1.0f;
             m_OnRightEdge = true;
         }
     }
@@ -176,23 +175,23 @@ void Camera::OnRender()
     bool ShouldUpdate = false;
 
     if (m_OnLeftEdge) {
-        m_AngleH -= 0.1f;
+        m_AngleH -= EDGE_STEP;
         ShouldUpdate = true;
     }
     else if (m_OnRightEdge) {
-        m_AngleH += 0.1f;
+        m_AngleH += EDGE_STEP;
         ShouldUpdate = true;
     }
 
     if (m_OnUpperEdge) {
         if (m_AngleV > -90.0f) {
-            m_AngleV -= 0.1f;
+            m_AngleV -= EDGE_STEP;
             ShouldUpdate = true;
         }
     }
     else if (m_OnLowerEdge) {
         if (m_AngleV < 90.0f) {
-           m_AngleV += 0.1f;
+           m_AngleV += EDGE_STEP;
            ShouldUpdate = true;
         }
     }

@@ -33,10 +33,16 @@ struct Edge
             b = _a;
         }
     }
+
+    void Print()
+    {
+        printf("Edge %d %d\n", a, b);
+    }
     
     uint a;
     uint b;
 };
+
 
 struct Neighbors
 {
@@ -77,6 +83,7 @@ struct Neighbors
     }
 };
 
+
 struct CompareEdges
 {
     bool operator()(const Edge& Edge1, const Edge& Edge2) const
@@ -90,6 +97,50 @@ struct CompareEdges
         else {
             return false;
         }            
+    }
+};
+
+
+struct CompareVectors
+{
+    bool operator()(const aiVector3D& a, const aiVector3D& b) const
+    {
+        if (a.x < b.x) {
+            return true;
+        }
+        else if (a.x == b.x) {
+            if (a.y < b.y) {
+                return true;
+            }
+            else if (a.y == b.y) {
+                if (a.z < b.z) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+};
+
+
+struct Face
+{
+    uint Indices[3];
+    
+    uint GetOppositeIndex(const Edge& e) const
+    {
+        for (uint i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(Indices) ; i++) {
+            uint Index = Indices[i];
+            
+            if (Index != e.a && Index != e.b) {
+                return Index;
+            }
+        }
+        
+        assert(0);
+
+        return 0;
     }
 };
 
@@ -205,6 +256,8 @@ enum VB_TYPES {
     Matrix4f m_GlobalInverseTransform;
 
     std::map<Edge, Neighbors, CompareEdges> m_indexMap;
+    std::map<aiVector3D, uint, CompareVectors> m_posMap;    
+    std::vector<Face> m_uniqueFaces;
     bool m_withAdjacencies;
 
     const aiScene* m_pScene;

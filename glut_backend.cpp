@@ -62,7 +62,7 @@ static void InitCallbacks()
 void GLUTBackendInit(int argc, char** argv)
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH|GLUT_STENCIL);
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 }
 
@@ -103,6 +103,7 @@ void GLUTBackendRun(ICallbacks* pCallbacks)
     glEnable(GL_CULL_FACE);  
 	glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_CLAMP);
 
     s_pCallbacks = pCallbacks;
     InitCallbacks();
